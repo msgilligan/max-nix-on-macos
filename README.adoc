@@ -1,0 +1,81 @@
+= Max Nix on macOS
+
+This repository is an exploration into installing a suite of https://nixos.org[Nix] tools on a macOS system. Although there is documentation on all the individual projects listed in the "Goals" section, there isn't (to my knowledge) a singe, comprehensive document on installing them all.
+
+It's for _maximal_ use of Nix on macOS.
+
+== Help and FeedBack Wanted
+
+If you have any ideas, suggestions, alternative approaches, or know of a similar project, please open an https://github.com/msgilligan/max-nix-on-macos/issues[Issue] and let me know.
+
+== Goals
+
+This is meant to be an overall guide and a collection of links to documentation and tools. It will try to tie the following collection of Nix-based tools into a somewhat cohesive system.
+
+1. https://github.com/nixos/nix-installer[nix-installer] (the NixOS.org Rust-based installer, currently in beta)
+2. https://nixos.org/download/#nix-install-macos[Nix]
+3. https://github.com/nix-darwin/nix-darwin[nix-darwin]
+4. Nix https://nix-community.github.io/home-manager/[Home Manager] (installed either https://nix-community.github.io/home-manager/index.xhtml#sec-flakes-standalone[standalone] or via https://nix-community.github.io/home-manager/index.xhtml#sec-flakes-nix-darwin-module[Nix Darwin])
+5. Linux Builder via Nix Darwin's https://nix-darwin.github.io/nix-darwin/manual/index.html#opt-nix.linux-builder.enable[linux-builder.enable]
+6. Homebrew installed and managed via Nix Darwin's https://nix-darwin.github.io/nix-darwin/manual/index.html#opt-homebrew.enable[homebrew.enable]
+7. Graphical NixOS and macOS VM with https://mac.getutm.app[UTM] (managed by Nix)
+8. Headless NixOS VMs with https://lima-vm.io[Lima] (managed by https://github.com/nixos-lima/nixos-lima[nixos-lima])
+
+Ideally, there will be an automated, reproducible install procedure using Nix and Nix-based tools.
+
+Additional goals:
+
+A. Flake-based
+B. Encourage use of Flake-based devShells
+C. Core tools are Open Source
+D. Submit tools and documentation upstream when appropriate
+E. Create a CI workflow (on GitHub Actions?) that automates a test of this installation
+
+The initial phase of this project is exploratory: finding existing documentation and tools. If something else already exists that achieves these goals, this project can be archived.
+
+== Who is this for?
+
+It is not meant for Nix beginners, but for people who have used Nix previously. You should have an Apple Silicon Macintosh system as we do not plan on testing on Intel-based Macintosh systems.
+
+== Alternatives
+
+To reference the old Perl motto: https://perl.fandom.com/wiki/TIMTOWTDI[TIMTOWTDI] ("there's more than one way to do it!")
+
+NixOS:: For users that don't want or need macOS _and_ have Apple hardware that will boot NixOS, see: https://wiki.nixos.org/wiki/NixOS_on_ARM/Apple_Silicon_Macs[NixOS on ARM/Apple Silicon Macs]
+
+Determinate Nix:: Determinate Systems works hard to provide a friendly solution for macOS. If being fully Open Source and community-based is not a requirement for you, see: https://determinate.systems/nix/macos/overview/[Determinate Nix for macOS]
+
+Ansible:: Nix is not the only way to automate macOS setup. For example, see Jeff Geerling's https://github.com/geerlingguy/mac-dev-playbook/[Mac Development Ansible Playbook]
+
+== Installation Overview
+
+This is a work in progress, but the basic steps (in order) should be:
+
+. Install and update macOS
+.. set the hostname
+. Install Apple Command Line Tools (`xcode-select --install`)
+. Use `git` to check out the instructions in this repository (and note any errors or improvements you discover and submit them as a PR)
+. Install Nix Darwin
+. Configure Nix Darwin (optionally installing Home Manager as a Nix Darwin Module)
+. (Optional) install Home Manager in standalone mode.
+. (Optional) install Homebrew, Linux Builder, and/or various VM/container tools.
+
+== References
+
+Here is a preliminary list of links. I have not read all these. This list will be revised and links will likely be removed.
+
+* https://nixos-and-flakes.thiscute.world/nixos-with-flakes/introduction-to-flakes
+* https://github.com/nix-community/awesome-nix
+* https://nix.dev
+* https://nixos.org/guides/nix-pills/
+* https://davi.sh/blog/2024/01/nix-darwin/
+* https://nixcademy.com/posts/nix-on-macos/
+* Ironic Badger's https://www.youtube.com/watch?v=qUmZtC6ts0M[Use nix on macOS to declare victory over your configs] video.
+* https://github.com/ironicbadger/nix-config
+* https://krisztianfekete.org/nixos-on-apple-silicon-with-utm/
+
+== References for Alternatives
+
+* https://github.com/nix-community/nixos-apple-silicon
+* https://docs.determinate.systems/getting-started/individuals/
+* https://determinate.systems/blog/changelog-determinate-nix-384/
