@@ -1,6 +1,6 @@
 = Max Nix on macOS
 
-This repository is an exploration into installing a suite of https://nixos.org[Nix] tools on a macOS system. Although there is documentation on all the individual projects listed in the "Goals" section, there isn't (to my knowledge) a singe, comprehensive document on installing them all.
+This repository is an exploration into installing a suite of https://nixos.org[Nix] tools on a macOS system. Although there is documentation on all the individual projects listed in the "Goals" section, there isn't (to my knowledge) a single, comprehensive document on installing them all.
 
 It's for _maximal_ use of Nix on macOS.
 
