@@ -52,10 +52,55 @@ Ansible:: Nix is not the only way to automate macOS setup. For example, see Jeff
 This is a work in progress, but the basic steps (in order) should be:
 
 . Install and update macOS
-.. set the hostname
 . Install Apple Command Line Tools (`xcode-select --install`)
-. Use `git` to check out the instructions in this repository (and note any errors or improvements you discover and submit them as a PR)
+. Use `git` to check out this repository (and maybe note any errors or improvements you discover and submit them as a PR)
+. Download and run the nix-installer
+.. `curl -L https://github.com/NixOS/nix-installer/releases/download/v2.33.3/nix-installer-aarch64-darwin -o nix-installer`
+.. `sha256sum nix-installer`  # verify shasum
+.. `chmod +x nix-installer`
+.. `./nix-installer install`
+. Set Hostname
+.. `sudo ./scripts/set-hostname.sh max`
 . Install Nix Darwin
+.. Remove or rename files created by `nix` installation that will be rewritten:
++
+----
+/etc/nix/nix.conf
+/etc/nix/nix.custom.conf
+/etc/zshenv
+----
+.. `sudo nix --extra-experimental-features 'nix-command flakes'  run nix-darwin/nix-darwin-25.11#darwin-rebuild -- switch --flake ~/ghboot/msgilligan/max-nix-on-macos` which results in:
++
+----
+warning: $HOME ('/Users/sean') is not owned by you, falling back to the one defined in the 'passwd' file ('/var/root')
+building the system configuration...
+warning: Git tree '/Users/sean/ghboot/msgilligan/max-nix-on-macos' is dirty
+fixing permissions on /etc/synthetic.conf...
+setting up /run via /etc/synthetic.conf...
+setting up groups...
+updating group members nixbld...
+setting up users...
+setting up /Applications/Nix Apps...
+setting up pam...
+applying patches...
+setting up /etc...
+setting up launchd services...
+creating service org.nixos.activate-system
+reloading service org.nixos.nix-daemon
+reloading nix-daemon...
+waiting for nix-daemon
+waiting for nix-daemon
+configuring networking...
+configuring application firewall...
+configuring power...
+setting up /Library/Fonts/Nix Fonts...
+setting nvram variables...
+----
+.. Verify the installation was successful by rebuilding with:
++
+----
+sudo darwin-rebuild switch --flake .
+----
 . Configure Nix Darwin (optionally installing Home Manager as a Nix Darwin Module)
 . (Optional) install Home Manager in standalone mode.
 . (Optional) install Homebrew, Linux Builder, and/or various VM/container tools.
