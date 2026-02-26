@@ -1,8 +1,10 @@
-{ pkgs, lib, inputs, ... }: {
+{ pkgs, lib, inputs, userinfo, ... }: {
       # Necessary for using flakes on this system.
       nix.settings.experimental-features = "nix-command flakes";
 
       nix.settings.trusted-users = [ "@admin" ];
+
+      users.users.${userinfo.username}.home = "/Users/${userinfo.username}";
 
       # Set Git commit hash for darwin-version.
       system.configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
