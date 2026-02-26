@@ -16,7 +16,10 @@
     # $ darwin-rebuild build --flake .#max
     # "max" should be changed to match your hostname (or vice-versa if you want to name your host "max")
     darwinConfigurations."max" = nix-darwin.lib.darwinSystem {
-      modules = [ ./max-darwin-config.nix ];
+      modules = [
+        ./darwin/core-darwin-config.nix
+        ./darwin/system-packages.nix
+      ];
       specialArgs = { inherit inputs; };
     };
   };
