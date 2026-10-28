@@ -5,7 +5,7 @@
   home-manager.users.${userinfo.username} = { pkgs, ... }: {
     home.username      = userinfo.username;
     home.homeDirectory = "/Users/${userinfo.username}";
-    home.stateVersion  = "25.11";
+    home.stateVersion  = "26.05";
     programs.git = {
       enable = true;
       settings.user = {

@@ -1,7 +1,9 @@
 { pkgs, lib, inputs, ... }: {
-      # List packages installed in system profile. To search by name, run:
-      # $ nix-env -qaP | grep wget
-      environment.systemPackages =
-        [ pkgs.vim
-        ];
+  environment.systemPackages =
+    [
+      pkgs.vim
+      pkgs.openssh
+      pkgs.yubikey-manager
+      #pkgs.libfido2            # Is this needed for yubikey SSH?
+    ];
 }

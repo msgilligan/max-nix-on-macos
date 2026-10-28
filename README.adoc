@@ -54,22 +54,20 @@ This is a work in progress, but the basic steps (in order) should be:
 . Install and update macOS
 . Install Apple Command Line Tools (`xcode-select --install`)
 . Use `git` to check out this repository (and maybe note any errors or improvements you discover and submit them as a PR)
-. Download and run the nix-installer
-.. `curl -L https://github.com/NixOS/nix-installer/releases/download/v2.33.3/nix-installer-aarch64-darwin -o nix-installer`
+. Download and run the https://github.com/NixOS/nix-installer/[nix-installer]
+.. `curl -L https://github.com/NixOS/nix-installer/releases/download/v2.35.4/nix-installer-aarch64-darwin -o nix-installer`
 .. `sha256sum nix-installer`  # verify shasum
 .. `chmod +x nix-installer`
-.. `./nix-installer install`
-. Set Hostname
-.. `sudo ./scripts/set-hostname.sh max`
+.. `./nix-installer install --enable-flakes`
 . Install Nix Darwin
-.. Remove or rename files created by `nix` installation that will be rewritten:
+.. Remove or rename files created by `nix` installation step (above) that will be rewritten by nix-darwin:
 +
 ----
 /etc/nix/nix.conf
 /etc/nix/nix.custom.conf
 /etc/zshenv
 ----
-.. `sudo nix --extra-experimental-features 'nix-command flakes'  run nix-darwin/nix-darwin-25.11#darwin-rebuild -- switch --flake ~/ghboot/msgilligan/max-nix-on-macos` which results in:
+.. `sudo nix --extra-experimental-features 'nix-command flakes'  run nix-darwin/nix-darwin-26.05#darwin-rebuild -- switch --flake .#bootstrap` which results in:
 +
 ----
 warning: $HOME ('/Users/sean') is not owned by you, falling back to the one defined in the 'passwd' file ('/var/root')
@@ -99,11 +97,13 @@ setting nvram variables...
 .. Verify the installation was successful by rebuilding with:
 +
 ----
-sudo darwin-rebuild switch --flake .
+sudo darwin-rebuild switch --flake .#bootstrap
 ----
 . Configure Nix Darwin (optionally installing Home Manager as a Nix Darwin Module)
 . (Optional) install Home Manager in standalone mode.
 . (Optional) install Homebrew, Linux Builder, and/or various VM/container tools.
+
+NOTE: You can ignore the warning about `$HOME ('/Users/xxx') is not owned by you` as long as your `users.users.${userinfo.username}.home` in `darwin/core-darwin-config.nix` is set correctly.
 
 == References
 
